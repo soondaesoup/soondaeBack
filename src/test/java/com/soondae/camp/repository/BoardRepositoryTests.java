@@ -50,6 +50,7 @@ public class BoardRepositoryTests {
     @Test
     public void testDelete(){
         boardRepository.deleteById(55L);
+        log.info("풀 되니????");
     }
 
 
