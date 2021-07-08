@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
+@ToString(exclude = "board")
 public class Reply {
 
     @Id
@@ -25,7 +25,7 @@ public class Reply {
     @Column(nullable = false)
     private boolean rdeleted;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
     public void changeReply(String rtext){

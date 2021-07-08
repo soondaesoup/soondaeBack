@@ -42,5 +42,12 @@ public class ReplyRepositoryTests {
         });
     }
 
+    @Test
+    public void testRead(){
+        Optional<Reply> result = replyRepository.findById(1L);
+        log.info(result);
+        result.ifPresent(reply -> log.info(reply));
+    }
+
 
 }
