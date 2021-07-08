@@ -29,6 +29,8 @@ public class Board {
     private String bprice;
     private LocalDateTime bregDate;
     private LocalDateTime bmodDate;
+
+    @Builder.Default
     private boolean bdeleted = false;
 
     public void changeValue(String bcontent,String bprice,String btitle,String bcategory){

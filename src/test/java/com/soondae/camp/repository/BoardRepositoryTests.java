@@ -7,8 +7,11 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import java.awt.print.Pageable;
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -65,6 +68,13 @@ public class BoardRepositoryTests {
         result.ifPresent(board -> {
             log.info(board);
         });
+    }
+
+    @Test
+    public void testPaging() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending()); // 최신순
+        Page<Board> result = boardRepository.findAll(pageable);
+        log.info(result.getContent());
     }
 
 

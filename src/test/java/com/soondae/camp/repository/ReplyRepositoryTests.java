@@ -7,6 +7,9 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.xml.transform.Result;
 import java.util.Optional;
@@ -56,12 +59,20 @@ public class ReplyRepositoryTests {
     }
 
     @Test
-    public void testReplyUdelte(){
+    public void testReplyUdelete(){
         Optional<Reply> result = replyRepository.findById(12L);
         result.ifPresent(reply->{
             reply.deleteReply(true);
             replyRepository.save(reply);
         });
+    }
+
+    @Test // 보드 1개당 댓글 다가져오기 + 페이징
+    public void testPagingByBoard() {
+        Pageable pageable = PageRequest.of(0,10);
+        Board board = Board.builder().bno(32L).build();
+        Page<Reply> result = replyRepository.getByBoard(board, pageable);
+        log.info(result.getContent());
     }
 
 
