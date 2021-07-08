@@ -2,6 +2,7 @@ package com.soondae.camp.repository;
 
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
+import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,15 @@ public class BoardRepositoryTests {
         result.ifPresent(board -> {
             board.deleteBoard(true);
             boardRepository.save(board);
+        });
+    }
+
+    @Test
+    public void testRead(){
+        Optional<Board> result = boardRepository.findById(12L);
+        result.ifPresent(board -> {
+
+            log.info(board);
         });
     }
 
