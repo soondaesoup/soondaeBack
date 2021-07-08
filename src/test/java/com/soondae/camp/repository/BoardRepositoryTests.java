@@ -40,6 +40,8 @@ public class BoardRepositoryTests {
     public void testUpdate(){
         Optional<Board> board = boardRepository.findById(10L);
 
+        log.info(board);
+
         board.ifPresent(board1 -> {
             board1.changeValue("맥북 공짜 아닙니다.","2500000","맥북","팝니다.");
             boardRepository.save(board1);
