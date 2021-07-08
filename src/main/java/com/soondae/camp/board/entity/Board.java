@@ -27,6 +27,8 @@ public class Board {
     private String bcontent;
     @Column(nullable = false)
     private String bprice;
+    @Column(nullable = false)
+    private String bwriter;
     private LocalDateTime bregDate;
     private LocalDateTime bmodDate;
 

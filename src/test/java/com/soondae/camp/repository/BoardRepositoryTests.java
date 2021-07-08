@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -29,13 +30,14 @@ public class BoardRepositoryTests {
     public void testCreate() {
         IntStream.rangeClosed(1, 100).forEach(value -> {
             Board board = Board.builder()
-                    .btitle("맥북프로 팝니다.")
+                    .btitle("맥북프로 팝니다."+value)
                     .bcontent("공짜로 드립니다.")
                     .bprice("공짜라니까")
                     .bcategory("팝니다")
                     .bstate(false)
                     .bmodDate(LocalDateTime.now())
                     .bregDate(LocalDateTime.now())
+                    .bwriter("서연호")
                     .build();
             boardRepository.save(board);
         });
@@ -75,6 +77,15 @@ public class BoardRepositoryTests {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending()); // 최신순
         Page<Board> result = boardRepository.findAll(pageable);
         log.info(result.getContent());
+    }
+
+    @Test
+    public void testPagingSearch() {
+        Pageable pageable = PageRequest.of(0, 10);
+        String keyword = "10";
+        String type = "t";
+        Page<Object[]> result = boardRepository.getSearchList(type, keyword, pageable);
+        result.getContent().forEach(objects -> log.info(Arrays.toString(objects)));
     }
 
 
