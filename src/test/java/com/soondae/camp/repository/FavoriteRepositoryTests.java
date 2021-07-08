@@ -37,7 +37,7 @@ public class FavoriteRepositoryTests {
     public void testUpdate() {
         Optional<Favorite> result = favoriteRepository.findById(3L);
         result.ifPresent(favorite -> {
-            favorite.changeFavorite(true);
+            favorite.changeFavorite(false);
             favoriteRepository.save(favorite);
         });
     }
