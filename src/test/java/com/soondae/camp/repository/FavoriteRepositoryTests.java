@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -18,7 +19,7 @@ public class FavoriteRepositoryTests {
     private FavoriteRepository favoriteRepository;
 
     @Test
-    public void testFavorite() {
+    public void testCreate() {
         IntStream.rangeClosed(1, 1000).forEach(value -> {
             long bno = (int)(Math.random()*100)+1;
             Board board = Board.builder()
@@ -28,6 +29,15 @@ public class FavoriteRepositoryTests {
                     .board(board)
                     .fstatus(true)
                     .build();
+            favoriteRepository.save(favorite);
+        });
+    }
+
+    @Test // 좋아요 수정
+    public void testUpdate() {
+        Optional<Favorite> result = favoriteRepository.findById(3L);
+        result.ifPresent(favorite -> {
+            favorite.changeFavorite(true);
             favoriteRepository.save(favorite);
         });
     }

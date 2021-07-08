@@ -17,6 +17,7 @@ public class BoardImage {
     @Id
     private String fuuid;
 
+    @Column(nullable = false)
     private String fname;
 
     @ManyToOne

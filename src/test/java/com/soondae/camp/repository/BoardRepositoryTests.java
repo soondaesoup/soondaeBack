@@ -36,7 +36,7 @@ public class BoardRepositoryTests {
         });
     }
 
-    @Test
+    @Test // 실제 update
     public void testUpdate(){
         Optional<Board> board = boardRepository.findById(10L);
 
@@ -46,13 +46,15 @@ public class BoardRepositoryTests {
             board1.changeValue("맥북 공짜 아닙니다.","2500000","맥북","팝니다.");
             boardRepository.save(board1);
         });
-
     }
 
-    @Test
-    public void testDelete(){
-        boardRepository.deleteById(55L);
-        log.info("풀 되니????");
+    @Test // delete지만 사실은 update
+    public void testDelete() {
+        Optional<Board> result = boardRepository.findById(12L);
+        result.ifPresent(board -> {
+            board.deleteBoard(true);
+            boardRepository.save(board);
+        });
     }
 
 
