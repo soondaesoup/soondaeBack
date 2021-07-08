@@ -32,4 +32,10 @@ public class Reply {
         this.rtext = rtext;
     }
 
+    public void deleteReply(boolean rdeleted) {
+        this.rdeleted = rdeleted;
+    }
+
 }
+
+

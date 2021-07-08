@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.xml.transform.Result;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -47,6 +48,19 @@ public class ReplyRepositoryTests {
         Optional<Reply> result = replyRepository.findById(1L);
         log.info(result);
         result.ifPresent(reply -> log.info(reply));
+    }
+
+    @Test
+    public void testReplyDelete(){
+        replyRepository.deleteById(54L);
+    }
+    @Test
+    public void testReplyUdelte(){
+        Optional<Reply> result = replyRepository.findById(12L);
+        result.ifPresent(reply->{
+            reply.deleteReply(true);
+            replyRepository.save(reply);
+        });
     }
 
 
