@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.awt.print.Pageable;
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -60,13 +61,11 @@ public class BoardRepositoryTests {
 
     @Test
     public void testRead(){
-        Optional<Board> result = boardRepository.findById(12L);
+        Optional<Board> result = boardRepository.findById(13L);
         result.ifPresent(board -> {
-
             log.info(board);
         });
     }
-
 
 
 }

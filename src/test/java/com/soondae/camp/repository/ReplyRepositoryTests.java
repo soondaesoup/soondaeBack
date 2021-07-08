@@ -54,6 +54,7 @@ public class ReplyRepositoryTests {
     public void testReplyDelete(){
         replyRepository.deleteById(54L);
     }
+
     @Test
     public void testReplyUdelte(){
         Optional<Reply> result = replyRepository.findById(12L);
