@@ -20,10 +20,12 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
 
+    @Column(nullable = false)
     private String rtext;
+    @Column(nullable = false)
+    private boolean rdeleted;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Board board;
 
     public void changeReply(String rtext){

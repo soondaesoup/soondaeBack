@@ -22,8 +22,11 @@ public class Favorite {
     @Builder.Default
     private boolean fstatus = false;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Board board;
+
+    public void changeFavorite(boolean fstatus) {
+        this.fstatus = fstatus;
+    }
 
 }
