@@ -72,14 +72,14 @@ public class BoardRepositoryTests {
         });
     }
 
-    @Test
+    @Test // 최신순
     public void testPaging() {
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending()); // 최신순
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
         Page<Board> result = boardRepository.findAll(pageable);
         log.info(result.getContent());
     }
 
-    @Test
+    @Test // 검색 + 페이징
     public void testPagingSearch() {
         Pageable pageable = PageRequest.of(0, 10);
         String keyword = "10";
