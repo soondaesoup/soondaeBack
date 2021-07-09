@@ -20,6 +20,9 @@ public class BoardImage {
     @Column(nullable = false)
     private String fname;
 
+    @Builder.Default
+    private boolean main=false;
+
     @ManyToOne
     private Board board;
 
