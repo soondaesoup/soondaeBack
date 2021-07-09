@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class ReplyController {
 
-    private final ReplyService replyService;
+//    private final ReplyService replyService;
 
     @PostMapping("/reply/register")
     public ResponseEntity<ReplyDTO> register(@RequestBody ReplyDTO replyDTO) {
-        replyService.register(replyDTO);
+//        replyService.register(replyDTO);
         return ResponseEntity.ok(replyDTO);
     }
 

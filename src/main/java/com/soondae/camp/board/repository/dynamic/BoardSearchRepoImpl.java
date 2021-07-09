@@ -6,6 +6,7 @@ import com.querydsl.jpa.JPQLQuery;
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.entity.QBoard;
 import com.soondae.camp.favorite.entity.QFavorite;
+import com.soondae.camp.file.entity.QBoardImage;
 import com.soondae.camp.reply.entity.QReply;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,7 +33,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         query.leftJoin(favorite).on(favorite.board.eq(board));
         JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct());
 
-        if(keyword != null && type != null) {
+        if(keyword != null && type != null && keyword.trim().length() > 0) {
             BooleanBuilder condition =new BooleanBuilder();
             String[] typeArr = type.split("");
             for (String t: typeArr) {
@@ -45,6 +46,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
             }
             tuple.where(condition);
         }
+
         tuple.where(board.bno.gt(0L));
         tuple.groupBy(board);
         tuple.orderBy(board.bno.desc());

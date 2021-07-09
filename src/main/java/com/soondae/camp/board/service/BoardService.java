@@ -1,7 +1,10 @@
 package com.soondae.camp.board.service;
 
 import com.soondae.camp.board.dto.BoardDTO;
+import com.soondae.camp.board.dto.BoardListDTO;
+import com.soondae.camp.board.dto.BoardListRequestDTO;
 import com.soondae.camp.board.entity.Board;
+import com.soondae.camp.common.dto.ListResponseDTO;
 import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
 
@@ -13,6 +16,33 @@ import java.util.stream.Collectors;
 public interface BoardService {
 
     Long register(BoardDTO boardDTO);
+
+    ListResponseDTO<BoardListDTO> getList(BoardListRequestDTO boardListRequestDTO);
+
+    default BoardListDTO arrToDTO(Object[] arr) {
+        Board board = (Board) arr[0];
+        long favoriteCount = (long) arr[1];
+        long replyCount = (long) arr[2];
+        return BoardListDTO.builder()
+                .boardDTO(entityToDTO(board))
+                .favoriteCount(favoriteCount)
+                .replyCount(replyCount)
+                .build();
+    }
+
+    default BoardDTO entityToDTO(Board board) {
+        return BoardDTO.builder()
+                .bno(board.getBno())
+                .bstate(board.isBstate())
+                .bcategory(board.getBcategory())
+                .btitle(board.getBtitle())
+                .bcontent(board.getBcontent())
+                .bprice(board.getBprice())
+                .bwriter(board.getBwriter())
+                .bregDate(board.getBregDate())
+                .bmodDate(board.getBmodDate())
+                .build();
+    }
 
     default Map<String, Object> dtoToEntity(BoardDTO boardDTO) {
         Map<String, Object> entityMap = new HashMap<>();
