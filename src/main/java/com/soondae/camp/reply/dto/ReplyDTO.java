@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -17,6 +18,12 @@ public class ReplyDTO {
     private Long rno;
 
     private String rtext;
+
+    private String rwriter;
+
+    private LocalDateTime bregDate;
+
+    private LocalDateTime bmodDate;
 
     private boolean rdeleted;
 
