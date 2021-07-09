@@ -2,6 +2,8 @@ package com.soondae.camp.board.dto;
 
 import com.soondae.camp.file.dto.BoardImageDTO;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
@@ -28,7 +30,9 @@ public class BoardDTO {
     private String bprice;
 
     private String bwriter;
+    @CreatedDate
     private LocalDateTime bregDate;
+    @LastModifiedDate
     private LocalDateTime bmodDate;
 
     @Builder.Default
