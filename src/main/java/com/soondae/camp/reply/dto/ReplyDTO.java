@@ -21,9 +21,9 @@ public class ReplyDTO {
 
     private String rwriter;
 
-    private LocalDateTime bregDate;
+    private LocalDateTime rregDate;
 
-    private LocalDateTime bmodDate;
+    private LocalDateTime rmodDate;
 
     private boolean rdeleted;
 

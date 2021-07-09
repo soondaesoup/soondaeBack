@@ -24,8 +24,8 @@ public class Reply {
     private String rwriter;
     @Column(nullable = false)
     private String rtext;
-    private LocalDateTime bregDate;
-    private LocalDateTime bmodDate;
+    private LocalDateTime rregDate;
+    private LocalDateTime rmodDate;
     @Column(nullable = false)
     private boolean rdeleted;
 
