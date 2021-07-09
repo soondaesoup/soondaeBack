@@ -23,8 +23,8 @@ public class BoardController {
     }
 
 
-
     // getOne
+
 
     // getList
 

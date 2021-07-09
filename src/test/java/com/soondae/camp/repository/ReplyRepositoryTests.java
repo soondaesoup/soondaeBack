@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import javax.xml.transform.Result;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -31,6 +32,9 @@ public class ReplyRepositoryTests {
                     .build();
             Reply reply = Reply.builder()
                     .board(board)
+                    .rregDate(LocalDateTime.now())
+                    .rmodDate(LocalDateTime.now())
+                    .rwriter("크크크")
                     .rtext("공짜라도 안사")
                     .build();
             replyRepository.save(reply);
