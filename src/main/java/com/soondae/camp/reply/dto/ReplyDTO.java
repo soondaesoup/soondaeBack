@@ -2,10 +2,13 @@ package com.soondae.camp.reply.dto;
 
 import com.soondae.camp.board.entity.Board;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -18,7 +21,16 @@ public class ReplyDTO {
 
     private String rtext;
 
-    private boolean rdeleted;
+    private String rwriter;
+
+    @CreatedDate
+    private LocalDateTime rregDate;
+
+    @LastModifiedDate
+    private LocalDateTime rmodDate;
+
+    @Builder.Default
+    private boolean rdeleted = false;
 
     private Board board;
 

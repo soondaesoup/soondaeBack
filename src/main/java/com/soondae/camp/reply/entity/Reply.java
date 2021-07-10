@@ -4,8 +4,10 @@ import com.soondae.camp.board.entity.Board;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tbl_reply")
@@ -19,9 +21,12 @@ public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
-
+    @Column(nullable = false)
+    private String rwriter;
     @Column(nullable = false)
     private String rtext;
+    private LocalDateTime rregDate;
+    private LocalDateTime rmodDate;
     @Column(nullable = false)
     private boolean rdeleted;
 
