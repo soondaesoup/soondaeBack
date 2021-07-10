@@ -1,6 +1,7 @@
 package com.soondae.camp.repository;
 
 import com.soondae.camp.board.entity.Board;
+import com.soondae.camp.board.repository.BoardRepository;
 import com.soondae.camp.reply.entity.Reply;
 import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +23,9 @@ public class ReplyRepositoryTests {
 
     @Autowired
     private ReplyRepository replyRepository;
+
+    @Autowired
+    private BoardRepository boardRepository;
 
     @Test
     public void testCreate() {
@@ -75,6 +79,7 @@ public class ReplyRepositoryTests {
     public void testPagingByBoard() {
         Pageable pageable = PageRequest.of(0,10);
         Board board = Board.builder().bno(32L).build();
+        Object[] boardWithFavorite = boardRepository.getOneBoardWithFavorite(32L);
         Page<Reply> result = replyRepository.getByBoard(board, pageable);
         log.info(result.getContent());
     }

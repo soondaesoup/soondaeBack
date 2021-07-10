@@ -17,29 +17,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class ReplyDTO {
+
     private Long rno;
+    private Long bno;
 
     private String rtext;
 
     private String rwriter;
 
-    @CreatedDate
     private LocalDateTime rregDate;
 
-    @LastModifiedDate
     private LocalDateTime rmodDate;
 
-    @Builder.Default
-    private boolean rdeleted = false;
-
-    private Board board;
-
-    public void changeReply(String rtext){
-        this.rtext = rtext;
-    }
-
-    public void deleteReply(boolean rdeleted) {
-        this.rdeleted = rdeleted;
-    }
+    private boolean rdeleted;
 
 }

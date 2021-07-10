@@ -1,15 +1,21 @@
 package com.soondae.camp.board.service;
 
 import com.soondae.camp.board.dto.BoardDTO;
+import com.soondae.camp.board.dto.BoardDetailDTO;
 import com.soondae.camp.board.dto.BoardListDTO;
 import com.soondae.camp.board.dto.BoardListRequestDTO;
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
 import com.soondae.camp.board.repository.dynamic.BoardSearchRepo;
+import com.soondae.camp.common.dto.DetailResponseDTO;
 import com.soondae.camp.common.dto.ListResponseDTO;
 import com.soondae.camp.common.dto.PageMaker;
+import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
 import com.soondae.camp.file.repository.BoardImageRepository;
+import com.soondae.camp.reply.dto.ReplyDTO;
+import com.soondae.camp.reply.entity.Reply;
+import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +23,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +32,8 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+
+    private final ReplyRepository replyRepository;
 
     private final BoardImageRepository boardImageRepository;
 
@@ -50,6 +60,25 @@ public class BoardServiceImpl implements BoardService {
                 .boardListDTO(boardListDTOS)
                 .pageMaker(pageMaker)
                 .build();
+    }
+
+    @Override
+    public BoardDetailDTO getOne(Long bno) {
+        Object[] boardWithFavorite = boardRepository.getOneBoardWithFavorite(bno);
+        Set<Reply> replies = replyRepository.getByBoard((Board) boardWithFavorite[0]);
+        Set<BoardImage> images = boardImageRepository.getByBoard((Board) boardWithFavorite[0]);
+
+        BoardDTO boardDTO = entityToDTO((Board) boardWithFavorite[0]);
+        Set<ReplyDTO> replyDTOS = replies.stream().map(reply -> ReplyEntityToDTO(reply)).collect(Collectors.toSet());
+        Set<BoardImageDTO> boardImageDTOS =  images.stream().map(boardImage -> ImageEntityToDTO(boardImage)).collect(Collectors.toSet());
+
+        BoardDetailDTO boardDetailDTO = BoardDetailDTO.builder()
+                .boardDTO(boardDTO)
+                .replyDTO(replyDTOS)
+                .boardImageDTO(boardImageDTOS)
+                .favoriteCount((Long) boardWithFavorite[1])
+                .build();
+        return boardDetailDTO;
     }
 
 

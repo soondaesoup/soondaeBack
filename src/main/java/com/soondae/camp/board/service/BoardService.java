@@ -1,12 +1,16 @@
 package com.soondae.camp.board.service;
 
 import com.soondae.camp.board.dto.BoardDTO;
+import com.soondae.camp.board.dto.BoardDetailDTO;
 import com.soondae.camp.board.dto.BoardListDTO;
 import com.soondae.camp.board.dto.BoardListRequestDTO;
 import com.soondae.camp.board.entity.Board;
+import com.soondae.camp.common.dto.DetailResponseDTO;
 import com.soondae.camp.common.dto.ListResponseDTO;
 import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
+import com.soondae.camp.reply.dto.ReplyDTO;
+import com.soondae.camp.reply.entity.Reply;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +23,9 @@ public interface BoardService {
 
     ListResponseDTO<BoardListDTO> getList(BoardListRequestDTO boardListRequestDTO);
 
+    BoardDetailDTO getOne(Long bno);
+
+
     default BoardListDTO arrToDTO(Object[] arr) {
         Board board = (Board) arr[0];
         long favoriteCount = (long) arr[1];
@@ -27,6 +34,24 @@ public interface BoardService {
                 .boardDTO(entityToDTO(board))
                 .favoriteCount(favoriteCount)
                 .replyCount(replyCount)
+                .build();
+    }
+
+    default BoardImageDTO ImageEntityToDTO(BoardImage boardImage) {
+        return BoardImageDTO.builder()
+                .fuuid(boardImage.getFuuid())
+                .fname(boardImage.getFname())
+                .build();
+    }
+
+    default ReplyDTO ReplyEntityToDTO(Reply reply) {
+        return ReplyDTO.builder()
+                .rno(reply.getRno())
+                .rtext(reply.getRtext())
+                .rwriter(reply.getRwriter())
+                .rregDate(reply.getRregDate())
+                .rmodDate(reply.getRmodDate())
+                .rdeleted(reply.isRdeleted())
                 .build();
     }
 
