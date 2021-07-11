@@ -2,6 +2,8 @@ package com.soondae.camp.member.config;
 
 import com.soondae.camp.member.filter.CheckFilter;
 import com.soondae.camp.member.filter.LoginFilter;
+import com.soondae.camp.member.filter.RefreshFilter;
+import com.soondae.camp.member.handler.CustomAccessDeniedHandler;
 import com.soondae.camp.member.handler.LoginFailHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -24,7 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("===Security Config===");
         http.csrf().disable();
         http.addFilterBefore(checkFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(refreshFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(loginFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 
 //    @Override
@@ -35,8 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .authorities("ROLE_USER");
 //    }
 
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -45,6 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CheckFilter checkFilter() {
         return new CheckFilter("/api/board/**/*");
+    }
+
+    @Bean
+    public RefreshFilter refreshFilter() {
+        return new RefreshFilter("/refresh");
     }
 
     @Bean

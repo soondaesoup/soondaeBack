@@ -26,8 +26,6 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         super(Board.class);
     }
 
-
-
     @Override
     public Page<Object[]> getSearchList(String type, String keyword, Pageable pageable) {
         QBoard board = QBoard.board;
@@ -75,9 +73,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         JPQLQuery<Tuple> tuple = query.select(board, favorite.countDistinct());
         tuple.where(board.bno.eq(bno));
         Tuple tupleList = tuple.fetchFirst();
-
         Object[] res = tupleList.toArray();
-
         return res;
     }
 
