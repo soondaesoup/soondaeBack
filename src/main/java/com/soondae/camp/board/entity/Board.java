@@ -46,4 +46,11 @@ public class Board {
         this.bdeleted = bdeleted;
     }
 
+    public void changeContent(String btitle, String bcontent, String bprice, String bcategory){
+        this.btitle = btitle;
+        this.bcontent = bcontent;
+        this.bprice = bprice;
+        this.bcontent = bcontent;
+    }
+
 }

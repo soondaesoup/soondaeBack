@@ -29,7 +29,7 @@ public class ReplyRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 500).forEach(value -> {
+        IntStream.rangeClosed(1, 5000).forEach(value -> {
             long bno = (int) (Math.random()*100)+1;
             Board board = Board.builder()
                     .bno(bno)

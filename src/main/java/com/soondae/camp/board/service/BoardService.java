@@ -25,6 +25,10 @@ public interface BoardService {
 
     BoardDetailDTO getOne(Long bno);
 
+    BoardDTO modify(BoardDTO boardDTO);
+
+    Long deleteBoard(Long bno);
+
 
     default BoardListDTO arrToDTO(Object[] arr) {
         Board board = (Board) arr[0];

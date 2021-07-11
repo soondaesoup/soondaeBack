@@ -81,5 +81,29 @@ public class BoardServiceImpl implements BoardService {
         return boardDetailDTO;
     }
 
+    @Override
+    public BoardDTO modify(BoardDTO boardDTO) {
+        Optional<Board> result = boardRepository.findById(boardDTO.getBno());
+        if (result.isPresent()) {
+            Board board = result.get();
+            board.changeContent(boardDTO.getBtitle(), boardDTO.getBcontent(), boardDTO.getBprice(), boardDTO.getBcategory());
+            boardRepository.save(board);
+            return entityToDTO(board);
+        }
+        return null;
+    }
+
+    @Override
+    public Long deleteBoard(Long bno) {
+        Optional<Board> result = boardRepository.findById(bno);
+        if(result.isPresent()) {
+            Board board = result.get();
+            board.deleteBoard(true);
+            boardRepository.save(board);
+            return board.getBno();
+        }
+        return null;
+    }
+
 
 }
