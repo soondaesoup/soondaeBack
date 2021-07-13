@@ -9,6 +9,9 @@ import com.soondae.camp.common.dto.DetailResponseDTO;
 import com.soondae.camp.common.dto.ListResponseDTO;
 import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
+import com.soondae.camp.member.dto.MemberDTO;
+import com.soondae.camp.member.dto.UserDTO;
+import com.soondae.camp.member.entity.Member;
 import com.soondae.camp.reply.dto.ReplyDTO;
 import com.soondae.camp.reply.entity.Reply;
 
@@ -45,6 +48,14 @@ public interface BoardService {
         return BoardImageDTO.builder()
                 .fuuid(boardImage.getFuuid())
                 .fname(boardImage.getFname())
+                .build();
+    }
+
+    default UserDTO MemberEntityToDTO(Member member) {
+        return UserDTO.builder()
+                .mno(member.getMno())
+                .mnickName(member.getMnickName())
+                .maddress(member.getMaddress())
                 .build();
     }
 

@@ -29,7 +29,7 @@ public class BoardRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 100).forEach(value -> {
+        IntStream.rangeClosed(1, 101).forEach(value -> {
             long bno = (int) (Math.random()*100) +1;
             Member member = Member.builder()
                     .mno(bno)
@@ -51,9 +51,7 @@ public class BoardRepositoryTests {
     @Test // 실제 update
     public void testUpdate(){
         Optional<Board> board = boardRepository.findById(10L);
-
         log.info(board);
-
         board.ifPresent(board1 -> {
             board1.changeValue("맥북 공짜 아닙니다.","2500000","맥북","팝니다.");
             boardRepository.save(board1);

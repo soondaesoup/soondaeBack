@@ -13,6 +13,8 @@ import com.soondae.camp.common.dto.PageMaker;
 import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
 import com.soondae.camp.file.repository.BoardImageRepository;
+import com.soondae.camp.member.entity.Member;
+import com.soondae.camp.member.repository.MemberRepository;
 import com.soondae.camp.reply.dto.ReplyDTO;
 import com.soondae.camp.reply.entity.Reply;
 import com.soondae.camp.reply.repository.ReplyRepository;
@@ -36,6 +38,8 @@ public class BoardServiceImpl implements BoardService {
     private final ReplyRepository replyRepository;
 
     private final BoardImageRepository boardImageRepository;
+
+    private final MemberRepository memberRepository;
 
     @Override
     public Long register(BoardDTO boardDTO) {
@@ -67,6 +71,7 @@ public class BoardServiceImpl implements BoardService {
         Object[] boardWithFavorite = boardRepository.getOneBoardWithFavorite(bno);
         Set<Reply> replies = replyRepository.getByBoard((Board) boardWithFavorite[0]);
         Set<BoardImage> images = boardImageRepository.getByBoard((Board) boardWithFavorite[0]);
+
 
         BoardDTO boardDTO = entityToDTO((Board) boardWithFavorite[0]);
         Set<ReplyDTO> replyDTOS = replies.stream().map(reply -> ReplyEntityToDTO(reply)).collect(Collectors.toSet());

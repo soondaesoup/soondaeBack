@@ -1,6 +1,7 @@
 package com.soondae.camp.favorite.entity;
 
 import com.soondae.camp.board.entity.Board;
+import com.soondae.camp.member.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString(exclude = "board")
+@ToString(exclude = {"board", "member"})
 public class Favorite {
 
     @Id
@@ -22,5 +23,8 @@ public class Favorite {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
 }

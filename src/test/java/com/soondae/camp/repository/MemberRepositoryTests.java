@@ -29,6 +29,8 @@ public class MemberRepositoryTests {
                     .memail("kiteho"+value+"@gmail.com")
                     .mpw(passwordEncoder.encode("1111"))
                     .mnickName("서연호"+value)
+                    .maddress("종로"+value)
+                    .mphone("010-1234-6789-"+value)
                     .build();
             member.addMemberRole(MemberRole.USER);
             if(value > 50) {

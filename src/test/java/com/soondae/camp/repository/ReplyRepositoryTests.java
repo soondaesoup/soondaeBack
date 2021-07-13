@@ -2,6 +2,7 @@ package com.soondae.camp.repository;
 
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
+import com.soondae.camp.member.entity.Member;
 import com.soondae.camp.reply.entity.Reply;
 import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.extern.log4j.Log4j2;
@@ -30,12 +31,17 @@ public class ReplyRepositoryTests {
     @Test
     public void testCreate() {
         IntStream.rangeClosed(1, 5000).forEach(value -> {
+            long mno = (int) (Math.random()*100)+1;
             long bno = (int) (Math.random()*100)+1;
+            Member member = Member.builder()
+                    .mno(mno)
+                    .build();
             Board board = Board.builder()
                     .bno(bno)
                     .build();
             Reply reply = Reply.builder()
                     .board(board)
+                    .member(member)
                     .rregDate(LocalDateTime.now())
                     .rmodDate(LocalDateTime.now())
                     .rtext("공짜라도 안사")
@@ -56,7 +62,6 @@ public class ReplyRepositoryTests {
     @Test
     public void testRead(){
         Optional<Reply> result = replyRepository.findById(1L);
-        log.info(result);
         result.ifPresent(reply -> log.info(reply));
     }
 
@@ -73,6 +78,4 @@ public class ReplyRepositoryTests {
         Page<Reply> result = replyRepository.getByBoard(board, pageable);
         log.info(result.getContent());
     }
-
-
 }

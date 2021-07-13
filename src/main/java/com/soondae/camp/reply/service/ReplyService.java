@@ -5,4 +5,7 @@ import com.soondae.camp.reply.dto.ReplyDTO;
 import com.soondae.camp.reply.entity.Reply;
 
 public interface ReplyService {
+
+
+
 }

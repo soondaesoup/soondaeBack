@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString(exclude = "board, member")
+@ToString(exclude = {"board", "member"})
 public class Reply {
 
     @Id
