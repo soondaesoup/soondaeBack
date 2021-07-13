@@ -13,20 +13,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
+@ToString(exclude = "board")
 public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fno;
-    @Builder.Default
-    private boolean fstatus = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
-
-    public void changeFavorite(boolean fstatus) {
-        this.fstatus = fstatus;
-    }
 
 }

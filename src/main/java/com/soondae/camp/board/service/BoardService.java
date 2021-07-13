@@ -52,10 +52,8 @@ public interface BoardService {
         return ReplyDTO.builder()
                 .rno(reply.getRno())
                 .rtext(reply.getRtext())
-                .rwriter(reply.getRwriter())
                 .rregDate(reply.getRregDate())
                 .rmodDate(reply.getRmodDate())
-                .rdeleted(reply.isRdeleted())
                 .build();
     }
 
@@ -67,7 +65,6 @@ public interface BoardService {
                 .btitle(board.getBtitle())
                 .bcontent(board.getBcontent())
                 .bprice(board.getBprice())
-                .bwriter(board.getBwriter())
                 .bregDate(board.getBregDate())
                 .bmodDate(board.getBmodDate())
                 .build();
@@ -82,7 +79,6 @@ public interface BoardService {
                 .btitle(boardDTO.getBtitle())
                 .bcontent(boardDTO.getBcontent())
                 .bprice(boardDTO.getBprice())
-                .bwriter(boardDTO.getBwriter())
                 .bregDate(boardDTO.getBregDate())
                 .bmodDate(boardDTO.getBmodDate())
                 .build();

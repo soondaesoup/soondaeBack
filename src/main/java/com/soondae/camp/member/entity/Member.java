@@ -23,9 +23,11 @@ public class Member {
     @Column(nullable = false)
     private String mpw;
     @Column(nullable = false)
-    private String mname;
-    @Builder.Default
-    private boolean mdeleted = false;
+    private String mnickName;
+    @Column(nullable = false)
+    private String maddress;
+    @Column(nullable = false)
+    private String mphone;
 
     @Builder.Default
     @ElementCollection(fetch = FetchType.LAZY)

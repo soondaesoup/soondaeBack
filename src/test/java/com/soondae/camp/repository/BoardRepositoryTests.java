@@ -2,6 +2,7 @@ package com.soondae.camp.repository;
 
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
+import com.soondae.camp.member.entity.Member;
 import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,12 @@ public class BoardRepositoryTests {
     @Test
     public void testCreate() {
         IntStream.rangeClosed(1, 100).forEach(value -> {
+            long bno = (int) (Math.random()*100) +1;
+            Member member = Member.builder()
+                    .mno(bno)
+                    .build();
             Board board = Board.builder()
+                    .member(member)
                     .btitle("맥북프로 팝니다."+value)
                     .bcontent("공짜로 드립니다.")
                     .bprice("공짜라니까")
@@ -37,7 +43,6 @@ public class BoardRepositoryTests {
                     .bstate(false)
                     .bmodDate(LocalDateTime.now())
                     .bregDate(LocalDateTime.now())
-                    .bwriter("서연호")
                     .build();
             boardRepository.save(board);
         });

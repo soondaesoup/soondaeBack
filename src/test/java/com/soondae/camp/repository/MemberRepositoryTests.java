@@ -28,7 +28,7 @@ public class MemberRepositoryTests {
             Member member = Member.builder()
                     .memail("kiteho"+value+"@gmail.com")
                     .mpw(passwordEncoder.encode("1111"))
-                    .mname("서연호"+value)
+                    .mnickName("서연호"+value)
                     .build();
             member.addMemberRole(MemberRole.USER);
             if(value > 50) {

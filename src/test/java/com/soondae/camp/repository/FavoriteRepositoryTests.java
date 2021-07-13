@@ -27,7 +27,6 @@ public class FavoriteRepositoryTests {
                     .build();
             Favorite favorite = Favorite.builder()
                     .board(board)
-                    .fstatus(true)
                     .build();
             favoriteRepository.save(favorite);
         });
@@ -37,7 +36,7 @@ public class FavoriteRepositoryTests {
     public void testUpdate() {
         Optional<Favorite> result = favoriteRepository.findById(3L);
         result.ifPresent(favorite -> {
-            favorite.changeFavorite(false);
+
             favoriteRepository.save(favorite);
         });
     }

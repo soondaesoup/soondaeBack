@@ -38,7 +38,6 @@ public class ReplyRepositoryTests {
                     .board(board)
                     .rregDate(LocalDateTime.now())
                     .rmodDate(LocalDateTime.now())
-                    .rwriter("크크크")
                     .rtext("공짜라도 안사")
                     .build();
             replyRepository.save(reply);
@@ -64,15 +63,6 @@ public class ReplyRepositoryTests {
     @Test
     public void testReplyDelete(){
         replyRepository.deleteById(54L);
-    }
-
-    @Test
-    public void testReplyUdelete(){
-        Optional<Reply> result = replyRepository.findById(12L);
-        result.ifPresent(reply->{
-            reply.deleteReply(true);
-            replyRepository.save(reply);
-        });
     }
 
     @Test // 보드 1개당 댓글 다가져오기 + 페이징

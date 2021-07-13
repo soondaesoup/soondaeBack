@@ -7,7 +7,6 @@ import java.util.Collection;
 
 public class MemberDTO extends User {
 
-
     public MemberDTO(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 
         super(username, password, authorities);
