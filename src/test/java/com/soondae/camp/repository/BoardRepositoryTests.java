@@ -33,6 +33,7 @@ public class BoardRepositoryTests {
             long bno = (int) (Math.random()*100) +1;
             Member member = Member.builder()
                     .mno(bno)
+                    .mnickName("김수현")
                     .build();
             Board board = Board.builder()
                     .member(member)
@@ -45,6 +46,16 @@ public class BoardRepositoryTests {
                     .bregDate(LocalDateTime.now())
                     .build();
             boardRepository.save(board);
+        });
+    }
+
+    @Test
+    public void testRead(){
+        Optional<Board> result = boardRepository.findById(13L);
+        result.ifPresent(board -> {
+            log.info(board);
+            log.info(board.getMember().getMnickName());
+            log.info(board.getMember().getMaddress());
         });
     }
 
@@ -67,13 +78,7 @@ public class BoardRepositoryTests {
         });
     }
 
-    @Test
-    public void testRead(){
-        Optional<Board> result = boardRepository.findById(13L);
-        result.ifPresent(board -> {
-            log.info(board);
-        });
-    }
+    
 
     @Test // 최신순
     public void testPaging() {

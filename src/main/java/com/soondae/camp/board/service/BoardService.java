@@ -37,10 +37,20 @@ public interface BoardService {
         Board board = (Board) arr[0];
         long favoriteCount = (long) arr[1];
         long replyCount = (long) arr[2];
+        BoardImage boardImage = (BoardImage) arr[3];
+        Member member = (Member) arr[4];
         return BoardListDTO.builder()
                 .boardDTO(entityToDTO(board))
                 .favoriteCount(favoriteCount)
                 .replyCount(replyCount)
+                .boardImageDTO(ImageEntityToDTO(boardImage))
+                .userDTO(memberEntityToDTO(member))
+                .build();
+    }
+
+    default UserDTO memberEntityToDTO(Member member) {
+        return UserDTO.builder()
+                .mnickName(member.getMnickName())
                 .build();
     }
 
@@ -48,14 +58,6 @@ public interface BoardService {
         return BoardImageDTO.builder()
                 .fuuid(boardImage.getFuuid())
                 .fname(boardImage.getFname())
-                .build();
-    }
-
-    default UserDTO MemberEntityToDTO(Member member) {
-        return UserDTO.builder()
-                .mno(member.getMno())
-                .mnickName(member.getMnickName())
-                .maddress(member.getMaddress())
                 .build();
     }
 

@@ -15,7 +15,7 @@ public class JWTUtil {
     private String secretKey = "zerock12345678";
 
     //1month
-    private long expire = 24;
+    private long expire = 240;
 
     public String generateToken(String content) throws Exception{
 

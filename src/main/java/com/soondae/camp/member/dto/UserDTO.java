@@ -8,12 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UserDTO {
-
     private Long mno;
-
     private String mnickName;
-
-    private String maddress;
 
 
 }

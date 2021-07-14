@@ -8,6 +8,7 @@ import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.entity.QBoard;
 import com.soondae.camp.favorite.entity.QFavorite;
 import com.soondae.camp.file.entity.QBoardImage;
+import com.soondae.camp.member.entity.QMember;
 import com.soondae.camp.reply.entity.QReply;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -32,12 +33,14 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         QReply reply = QReply.reply;
         QFavorite favorite = QFavorite.favorite;
         QBoardImage boardImage = QBoardImage.boardImage;
+        QMember member = QMember.member;
 
         JPQLQuery<Board> query = from(board);
         query.leftJoin(reply).on(reply.board.eq(board));
         query.leftJoin(favorite).on(favorite.board.eq(board));
-        query.leftJoin(boardImage).on(boardImage.board.eq(board), boardImage.fmain.eq(true));
-        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage);
+        query.leftJoin(boardImage).on(boardImage.board.eq(board));
+        query.innerJoin(member).on(member.mno.eq(board.member.mno));
+        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage, member);
 
         if(keyword != null && type != null && keyword.trim().length() > 0) {
             BooleanBuilder condition =new BooleanBuilder();
@@ -73,5 +76,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         Object[] res = tupleList.toArray();
         return res;
     }
+
+
 
 }
