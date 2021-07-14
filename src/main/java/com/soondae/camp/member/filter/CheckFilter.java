@@ -50,7 +50,7 @@ public class CheckFilter extends OncePerRequestFilter {
         // URI가 맞으면??
         String tokenValue = request.getHeader("Authorization");
         String memail = null;
-        log.info("===What is tokenValue-->"+tokenValue+"===");
+        log.info("====What is tokenValue-->"+tokenValue+"====");
 
         String jwtStr = tokenValue.substring(7); // Baerer 6글자+스페이스바까지 해서 7글자 잘라내고 뒤에 토큰값
 
