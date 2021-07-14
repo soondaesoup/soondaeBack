@@ -37,7 +37,7 @@ public class CheckFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("===Start Check!!===");
+        log.info("====Start Check!!====");
         // 어떤 URI???를 검사하는가???
         String requestURI = request.getRequestURI();
         boolean matchResult = matcher.match(pattern, requestURI);
