@@ -20,8 +20,8 @@ public class FavoriteRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 1000).forEach(value -> {
-            long bno = (int)(Math.random()*100)+1;
+        IntStream.rangeClosed(1, 5000).forEach(value -> {
+            long bno = (int)(Math.random()*4000)+1;
             Board board = Board.builder()
                     .bno(bno)
                     .build();

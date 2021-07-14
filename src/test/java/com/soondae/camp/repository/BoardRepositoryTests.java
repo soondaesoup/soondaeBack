@@ -28,7 +28,7 @@ public class BoardRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 100).forEach(value -> {
+        IntStream.rangeClosed(1, 5000).forEach(value -> {
             Board board = Board.builder()
                     .btitle("맥북프로 팝니다."+value)
                     .bcontent("공짜로 드립니다.")
