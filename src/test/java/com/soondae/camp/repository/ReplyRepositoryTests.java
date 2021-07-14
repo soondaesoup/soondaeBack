@@ -49,7 +49,7 @@ public class ReplyRepositoryTests {
     public void testUpdate(){
         Optional<Reply> reply = replyRepository.findById(100L);
         reply.ifPresent(reply1 -> {
-            reply1.changeReply("저 살게요...");
+            //reply1.changeReply("저 살게요...");
             replyRepository.save(reply1);
         });
     }
