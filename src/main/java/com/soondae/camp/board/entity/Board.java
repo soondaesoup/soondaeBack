@@ -1,6 +1,9 @@
 package com.soondae.camp.board.entity;
 
+import com.soondae.camp.member.entity.Member;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,29 +14,33 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
+@ToString(exclude = "member")
 public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
+    @Column(nullable = false)
+    private String btitle;
     @Builder.Default
     private boolean bstate = false;
     @Column(nullable = false)
     private String bcategory;
     @Column(nullable = false)
-    private String btitle;
-    @Column(nullable = false)
     private String bcontent;
     @Column(nullable = false)
     private String bprice;
-    @Column(nullable = false)
-    private String bwriter;
+    @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime bregDate;
+    @LastModifiedDate
     private LocalDateTime bmodDate;
 
     @Builder.Default
     private boolean bdeleted = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     public void changeValue(String bcontent,String bprice,String btitle,String bcategory){
         this.btitle = btitle;
@@ -44,6 +51,13 @@ public class Board {
 
     public void deleteBoard(boolean bdeleted) {
         this.bdeleted = bdeleted;
+    }
+
+    public void changeContent(String btitle, String bcontent, String bprice, String bcategory){
+        this.btitle = btitle;
+        this.bcontent = bcontent;
+        this.bprice = bprice;
+        this.bcontent = bcontent;
     }
 
 }

@@ -2,6 +2,7 @@ package com.soondae.camp.repository;
 
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
+import com.soondae.camp.member.entity.Member;
 import com.soondae.camp.reply.entity.Reply;
 import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.extern.log4j.Log4j2;
@@ -29,16 +30,20 @@ public class ReplyRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 500).forEach(value -> {
+        IntStream.rangeClosed(1, 5000).forEach(value -> {
+            long mno = (int) (Math.random()*100)+1;
             long bno = (int) (Math.random()*100)+1;
+            Member member = Member.builder()
+                    .mno(mno)
+                    .build();
             Board board = Board.builder()
                     .bno(bno)
                     .build();
             Reply reply = Reply.builder()
                     .board(board)
+                    .member(member)
                     .rregDate(LocalDateTime.now())
                     .rmodDate(LocalDateTime.now())
-                    .rwriter("크크크")
                     .rtext("공짜라도 안사")
                     .build();
             replyRepository.save(reply);
@@ -57,22 +62,12 @@ public class ReplyRepositoryTests {
     @Test
     public void testRead(){
         Optional<Reply> result = replyRepository.findById(1L);
-        log.info(result);
         result.ifPresent(reply -> log.info(reply));
     }
 
     @Test
     public void testReplyDelete(){
         replyRepository.deleteById(54L);
-    }
-
-    @Test
-    public void testReplyUdelete(){
-        Optional<Reply> result = replyRepository.findById(12L);
-        result.ifPresent(reply->{
-            reply.deleteReply(true);
-            replyRepository.save(reply);
-        });
     }
 
     @Test // 보드 1개당 댓글 다가져오기 + 페이징
@@ -83,6 +78,4 @@ public class ReplyRepositoryTests {
         Page<Reply> result = replyRepository.getByBoard(board, pageable);
         log.info(result.getContent());
     }
-
-
 }

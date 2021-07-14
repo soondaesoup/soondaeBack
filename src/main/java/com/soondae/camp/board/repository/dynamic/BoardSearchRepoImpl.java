@@ -26,8 +26,6 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         super(Board.class);
     }
 
-
-
     @Override
     public Page<Object[]> getSearchList(String type, String keyword, Pageable pageable) {
         QBoard board = QBoard.board;
@@ -38,7 +36,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         JPQLQuery<Board> query = from(board);
         query.leftJoin(reply).on(reply.board.eq(board));
         query.leftJoin(favorite).on(favorite.board.eq(board));
-        query.leftJoin(boardImage).on(boardImage.board.eq(board), boardImage.main.eq(true));
+        query.leftJoin(boardImage).on(boardImage.board.eq(board), boardImage.fmain.eq(true));
         JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage);
 
         if(keyword != null && type != null && keyword.trim().length() > 0) {
@@ -47,9 +45,6 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
             for (String t: typeArr) {
                 if(t.equals("t")) {
                     condition.or(board.btitle.contains(keyword));
-                }
-                else if(t.equals("w")) {
-                    condition.or(board.bwriter.contains(keyword));
                 }
             }
             tuple.where(condition);
@@ -75,9 +70,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         JPQLQuery<Tuple> tuple = query.select(board, favorite.countDistinct());
         tuple.where(board.bno.eq(bno));
         Tuple tupleList = tuple.fetchFirst();
-
         Object[] res = tupleList.toArray();
-
         return res;
     }
 

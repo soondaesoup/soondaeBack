@@ -1,6 +1,7 @@
 package com.soondae.camp.favorite.entity;
 
 import com.soondae.camp.board.entity.Board;
+import com.soondae.camp.member.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -13,20 +14,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
+@ToString(exclude = {"board", "member"})
 public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fno;
-    @Builder.Default
-    private boolean fstatus = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
-    public void changeFavorite(boolean fstatus) {
-        this.fstatus = fstatus;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
 }

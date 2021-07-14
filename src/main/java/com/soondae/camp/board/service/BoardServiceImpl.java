@@ -13,6 +13,8 @@ import com.soondae.camp.common.dto.PageMaker;
 import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
 import com.soondae.camp.file.repository.BoardImageRepository;
+import com.soondae.camp.member.entity.Member;
+import com.soondae.camp.member.repository.MemberRepository;
 import com.soondae.camp.reply.dto.ReplyDTO;
 import com.soondae.camp.reply.entity.Reply;
 import com.soondae.camp.reply.repository.ReplyRepository;
@@ -36,6 +38,8 @@ public class BoardServiceImpl implements BoardService {
     private final ReplyRepository replyRepository;
 
     private final BoardImageRepository boardImageRepository;
+
+    private final MemberRepository memberRepository;
 
     @Override
     public Long register(BoardDTO boardDTO) {
@@ -68,6 +72,7 @@ public class BoardServiceImpl implements BoardService {
         Set<Reply> replies = replyRepository.getByBoard((Board) boardWithFavorite[0]);
         Set<BoardImage> images = boardImageRepository.getByBoard((Board) boardWithFavorite[0]);
 
+
         BoardDTO boardDTO = entityToDTO((Board) boardWithFavorite[0]);
         Set<ReplyDTO> replyDTOS = replies.stream().map(reply -> ReplyEntityToDTO(reply)).collect(Collectors.toSet());
         Set<BoardImageDTO> boardImageDTOS =  images.stream().map(boardImage -> ImageEntityToDTO(boardImage)).collect(Collectors.toSet());
@@ -79,6 +84,30 @@ public class BoardServiceImpl implements BoardService {
                 .favoriteCount((Long) boardWithFavorite[1])
                 .build();
         return boardDetailDTO;
+    }
+
+    @Override
+    public BoardDTO modify(BoardDTO boardDTO) {
+        Optional<Board> result = boardRepository.findById(boardDTO.getBno());
+        if (result.isPresent()) {
+            Board board = result.get();
+            board.changeContent(boardDTO.getBtitle(), boardDTO.getBcontent(), boardDTO.getBprice(), boardDTO.getBcategory());
+            boardRepository.save(board);
+            return entityToDTO(board);
+        }
+        return null;
+    }
+
+    @Override
+    public Long deleteBoard(Long bno) {
+        Optional<Board> result = boardRepository.findById(bno);
+        if(result.isPresent()) {
+            Board board = result.get();
+            board.deleteBoard(true);
+            boardRepository.save(board);
+            return board.getBno();
+        }
+        return null;
     }
 
 

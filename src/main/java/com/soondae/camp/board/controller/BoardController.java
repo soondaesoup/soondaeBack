@@ -42,7 +42,20 @@ public class BoardController {
 
 
     // update
+    @PutMapping("/{bno}")
+    public ResponseEntity<BoardDTO> modify(@PathVariable Long bno, @RequestBody BoardDTO boardDTO) {
+        boardDTO.setBno(bno);
+        BoardDTO modfiedDTO = boardService.modify(boardDTO);
+        return ResponseEntity.ok(modfiedDTO);
 
+    }
+
+    // delete
+    @DeleteMapping("/{bno}")
+    public ResponseEntity<Long> delete(@PathVariable Long bno) {
+        Long deleteNo = boardService.deleteBoard(bno);
+        return ResponseEntity.ok(deleteNo);
+    }
 
 
 }

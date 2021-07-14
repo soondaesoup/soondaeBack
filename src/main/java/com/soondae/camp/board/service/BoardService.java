@@ -9,6 +9,9 @@ import com.soondae.camp.common.dto.DetailResponseDTO;
 import com.soondae.camp.common.dto.ListResponseDTO;
 import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
+import com.soondae.camp.member.dto.MemberDTO;
+import com.soondae.camp.member.dto.UserDTO;
+import com.soondae.camp.member.entity.Member;
 import com.soondae.camp.reply.dto.ReplyDTO;
 import com.soondae.camp.reply.entity.Reply;
 
@@ -24,6 +27,10 @@ public interface BoardService {
     ListResponseDTO<BoardListDTO> getList(BoardListRequestDTO boardListRequestDTO);
 
     BoardDetailDTO getOne(Long bno);
+
+    BoardDTO modify(BoardDTO boardDTO);
+
+    Long deleteBoard(Long bno);
 
 
     default BoardListDTO arrToDTO(Object[] arr) {
@@ -44,14 +51,20 @@ public interface BoardService {
                 .build();
     }
 
+    default UserDTO MemberEntityToDTO(Member member) {
+        return UserDTO.builder()
+                .mno(member.getMno())
+                .mnickName(member.getMnickName())
+                .maddress(member.getMaddress())
+                .build();
+    }
+
     default ReplyDTO ReplyEntityToDTO(Reply reply) {
         return ReplyDTO.builder()
                 .rno(reply.getRno())
                 .rtext(reply.getRtext())
-                .rwriter(reply.getRwriter())
                 .rregDate(reply.getRregDate())
                 .rmodDate(reply.getRmodDate())
-                .rdeleted(reply.isRdeleted())
                 .build();
     }
 
@@ -63,7 +76,6 @@ public interface BoardService {
                 .btitle(board.getBtitle())
                 .bcontent(board.getBcontent())
                 .bprice(board.getBprice())
-                .bwriter(board.getBwriter())
                 .bregDate(board.getBregDate())
                 .bmodDate(board.getBmodDate())
                 .build();
@@ -78,7 +90,6 @@ public interface BoardService {
                 .btitle(boardDTO.getBtitle())
                 .bcontent(boardDTO.getBcontent())
                 .bprice(boardDTO.getBprice())
-                .bwriter(boardDTO.getBwriter())
                 .bregDate(boardDTO.getBregDate())
                 .bmodDate(boardDTO.getBmodDate())
                 .build();
