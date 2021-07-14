@@ -34,6 +34,8 @@ public class BoardImageController {
     }
 
 
+
+
     @ResponseBody
     @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BoardImageDTO> upload(MultipartFile[] files) {
