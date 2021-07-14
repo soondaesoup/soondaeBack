@@ -21,8 +21,8 @@ public class FavoriteRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 101).forEach(value -> {
-            long bno = (int)(Math.random()*100)+1;
+        IntStream.rangeClosed(1, 5000).forEach(value -> {
+            long bno = (int)(Math.random()*4000)+1;
             Member member = Member.builder()
                     .mno((long) value)
                     .build();

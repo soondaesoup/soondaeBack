@@ -29,7 +29,7 @@ public class BoardRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 101).forEach(value -> {
+        IntStream.rangeClosed(1, 5000).forEach(value -> {
             long bno = (int) (Math.random()*100) +1;
             Member member = Member.builder()
                     .mno(bno)

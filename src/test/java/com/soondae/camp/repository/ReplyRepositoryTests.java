@@ -31,8 +31,8 @@ public class ReplyRepositoryTests {
     @Test
     public void testCreate() {
         IntStream.rangeClosed(1, 5000).forEach(value -> {
-            long mno = (int) (Math.random()*100)+1;
-            long bno = (int) (Math.random()*100)+1;
+            long mno = (int) (Math.random()*4000)+1;
+            long bno = (int) (Math.random()*4000)+1;
             Member member = Member.builder()
                     .mno(mno)
                     .build();

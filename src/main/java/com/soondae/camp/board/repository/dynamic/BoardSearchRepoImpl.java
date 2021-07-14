@@ -8,6 +8,7 @@ import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.entity.QBoard;
 import com.soondae.camp.favorite.entity.QFavorite;
 import com.soondae.camp.file.entity.QBoardImage;
+import com.soondae.camp.member.entity.QMember;
 import com.soondae.camp.reply.entity.QReply;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -30,17 +31,19 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
     public Page<Object[]> getSearchList(String type, String keyword, Pageable pageable) {
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
+        QMember member = QMember.member;
         QFavorite favorite = QFavorite.favorite;
         QBoardImage boardImage = QBoardImage.boardImage;
 
         JPQLQuery<Board> query = from(board);
         query.leftJoin(reply).on(reply.board.eq(board));
+        query.leftJoin(member).on(board.member.eq(member));
         query.leftJoin(favorite).on(favorite.board.eq(board));
         query.leftJoin(boardImage).on(boardImage.board.eq(board), boardImage.fmain.eq(true));
-        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage);
+        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage, member);
 
         if(keyword != null && type != null && keyword.trim().length() > 0) {
-            BooleanBuilder condition =new BooleanBuilder();
+            BooleanBuilder condition = new BooleanBuilder();
             String[] typeArr = type.split("");
             for (String t: typeArr) {
                 if(t.equals("t")) {
@@ -55,6 +58,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         tuple.orderBy(board.bno.desc());
         tuple.offset(pageable.getOffset());
         tuple.limit(pageable.getPageSize());
+
         List<Tuple> tupleList = tuple.fetch();
         List<Object[]> arrList = tupleList.stream().map(tuple1 -> tuple1.toArray()).collect(Collectors.toList());
         long totalCount = tuple.fetchCount();
