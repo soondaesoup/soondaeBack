@@ -16,8 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class BoardDTO {
-    
-    // 시간있으면 getList / getOne DTO 따로 분리하기
 
     private Long bno;
 
@@ -30,8 +28,6 @@ public class BoardDTO {
     private String bcontent;
 
     private String bprice;
-
-    private String bwriter;
     @CreatedDate
     private LocalDateTime bregDate;
     @LastModifiedDate

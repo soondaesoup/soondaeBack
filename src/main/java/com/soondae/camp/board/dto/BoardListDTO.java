@@ -1,5 +1,7 @@
 package com.soondae.camp.board.dto;
 
+import com.soondae.camp.file.dto.BoardImageDTO;
+import com.soondae.camp.member.dto.UserDTO;
 import lombok.*;
 
 @Data
@@ -10,9 +12,8 @@ public class BoardListDTO {
 
     // 보드 DTO에 있는것들 다
     private BoardDTO boardDTO;
-    private String fuuid;
-    private String fname;
-    
+    private BoardImageDTO boardImageDTO;
+    private UserDTO userDTO;
     private long favoriteCount;
     private long replyCount;
 
