@@ -24,7 +24,4 @@ public class BoardDetailDTO {
     private Set<BoardImageDTO> boardImageDTO;
     private long favoriteCount;
 
-
-
-
 }

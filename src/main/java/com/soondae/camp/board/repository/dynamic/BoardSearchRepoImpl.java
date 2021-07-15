@@ -90,6 +90,4 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         return res;
     }
 
-
-
 }
