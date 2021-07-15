@@ -12,6 +12,7 @@ public class BoardListDTO {
     private BoardDTO boardDTO;
     private String fuuid;
     private String fname;
+    private String mnick_name;
     
     private long favoriteCount;
     private long replyCount;

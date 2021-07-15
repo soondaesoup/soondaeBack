@@ -17,6 +17,4 @@ public class ListResponseDTO<D> {
     private List<D> boardListDTO;
     private PageMaker pageMaker;
 
-
-
 }

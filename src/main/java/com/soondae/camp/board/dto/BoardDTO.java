@@ -31,7 +31,6 @@ public class BoardDTO {
 
     private String bprice;
 
-    private String bwriter;
     @CreatedDate
     private LocalDateTime bregDate;
     @LastModifiedDate

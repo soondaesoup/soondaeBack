@@ -19,6 +19,7 @@ import com.soondae.camp.reply.dto.ReplyDTO;
 import com.soondae.camp.reply.entity.Reply;
 import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Service
 @AllArgsConstructor
 public class BoardServiceImpl implements BoardService {
@@ -55,9 +57,11 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public ListResponseDTO<BoardListDTO> getList(BoardListRequestDTO boardListRequestDTO) {
+        log.info("====================================================================== getList");
         Pageable pageable = boardListRequestDTO.getPageable();
         Page<Object[]> result = boardRepository.getSearchList(boardListRequestDTO.getType(), boardListRequestDTO.getKeyword(), pageable);
         List<BoardListDTO> boardListDTOS = result.getContent().stream().map(objects -> arrToDTO(objects)).collect(Collectors.toList());
+        log.info("================================================================== result"+boardListDTOS);
         PageMaker pageMaker = new PageMaker(boardListRequestDTO.getPage(), boardListRequestDTO.getSize(), (int) result.getTotalElements());
         return ListResponseDTO.<BoardListDTO>builder()
                 .listRequestDTO(boardListRequestDTO)

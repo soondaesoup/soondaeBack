@@ -37,10 +37,12 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
 
         JPQLQuery<Board> query = from(board);
         query.leftJoin(reply).on(reply.board.eq(board));
-        query.leftJoin(member).on(board.member.eq(member));
+//        query.leftJoin(member).join(board.member.eq(board));
         query.leftJoin(favorite).on(favorite.board.eq(board));
         query.leftJoin(boardImage).on(boardImage.board.eq(board), boardImage.fmain.eq(true));
-        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage, member);
+        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage, member.mnickName);
+
+        log.info("ooooooooooooooooooooooooooooooooo       "+tuple);
 
         if(keyword != null && type != null && keyword.trim().length() > 0) {
             BooleanBuilder condition = new BooleanBuilder();
@@ -55,7 +57,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
 
         tuple.where(board.bno.gt(0L));
         tuple.groupBy(board);
-        tuple.orderBy(board.bno.desc());
+        tuple.orderBy(board.bno.asc());
         tuple.offset(pageable.getOffset());
         tuple.limit(pageable.getPageSize());
 
