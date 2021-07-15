@@ -31,21 +31,19 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
     public Page<Object[]> getSearchList(String type, String keyword, Pageable pageable) {
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
-        QMember member = QMember.member;
         QFavorite favorite = QFavorite.favorite;
         QBoardImage boardImage = QBoardImage.boardImage;
+        QMember member = QMember.member;
 
         JPQLQuery<Board> query = from(board);
         query.leftJoin(reply).on(reply.board.eq(board));
-//        query.leftJoin(member).join(board.member.eq(board));
         query.leftJoin(favorite).on(favorite.board.eq(board));
-        query.leftJoin(boardImage).on(boardImage.board.eq(board), boardImage.fmain.eq(true));
-        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage, member.mnickName);
-
-        log.info("ooooooooooooooooooooooooooooooooo       "+tuple);
+        query.leftJoin(boardImage).on(boardImage.board.eq(board));
+        query.innerJoin(member).on(member.mno.eq(board.member.mno));
+        JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage, member);
 
         if(keyword != null && type != null && keyword.trim().length() > 0) {
-            BooleanBuilder condition = new BooleanBuilder();
+            BooleanBuilder condition =new BooleanBuilder();
             String[] typeArr = type.split("");
             for (String t: typeArr) {
                 if(t.equals("t")) {
@@ -60,7 +58,6 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         tuple.orderBy(board.bno.asc());
         tuple.offset(pageable.getOffset());
         tuple.limit(pageable.getPageSize());
-
         List<Tuple> tupleList = tuple.fetch();
         List<Object[]> arrList = tupleList.stream().map(tuple1 -> tuple1.toArray()).collect(Collectors.toList());
         long totalCount = tuple.fetchCount();
@@ -79,5 +76,7 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         Object[] res = tupleList.toArray();
         return res;
     }
+
+
 
 }

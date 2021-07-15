@@ -39,7 +39,8 @@ public class Board {
     @Builder.Default
     private boolean bdeleted = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn
     private Member member;
 
     public void changeValue(String bcontent,String bprice,String btitle,String bcategory){
