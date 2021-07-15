@@ -36,10 +36,12 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         QMember member = QMember.member;
 
         JPQLQuery<Board> query = from(board);
+
         query.leftJoin(reply).on(reply.board.eq(board));
         query.leftJoin(favorite).on(favorite.board.eq(board));
         query.leftJoin(boardImage).on(boardImage.board.eq(board));
-        query.innerJoin(member).on(member.mno.eq(board.member.mno));
+        query.leftJoin(member).on(member.mno.eq(board.member.mno));
+
         JPQLQuery<Tuple> tuple = query.select(board, reply.countDistinct(), favorite.countDistinct(), boardImage, member);
 
         if(keyword != null && type != null && keyword.trim().length() > 0) {
@@ -58,8 +60,11 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
         tuple.orderBy(board.bno.asc());
         tuple.offset(pageable.getOffset());
         tuple.limit(pageable.getPageSize());
+
         List<Tuple> tupleList = tuple.fetch();
         List<Object[]> arrList = tupleList.stream().map(tuple1 -> tuple1.toArray()).collect(Collectors.toList());
+        arrList.forEach(arr -> log.info(Arrays.toString(arr)));
+
         long totalCount = tuple.fetchCount();
         return new PageImpl<>(arrList, pageable, totalCount);
     }
@@ -68,12 +73,20 @@ public class BoardSearchRepoImpl extends QuerydslRepositorySupport implements Bo
     public Object[] getOneBoardWithFavorite(Long bno) {
         QBoard board = QBoard.board;
         QFavorite favorite = QFavorite.favorite;
+        QMember member = QMember.member;
+
         JPQLQuery<Board> query = from(board);
+
         query.leftJoin(favorite).on(favorite.board.eq(board));
-        JPQLQuery<Tuple> tuple = query.select(board, favorite.countDistinct());
+        query.leftJoin(member).on(member.mno.eq(board.member.mno));
+
+        JPQLQuery<Tuple> tuple = query.select(board, favorite.countDistinct(), member);
+
         tuple.where(board.bno.eq(bno));
         Tuple tupleList = tuple.fetchFirst();
+
         Object[] res = tupleList.toArray();
+
         return res;
     }
 

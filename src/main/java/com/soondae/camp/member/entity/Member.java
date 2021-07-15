@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
+@ToString(exclude = "memberRoleSet")
 public class Member {
 
     @Id

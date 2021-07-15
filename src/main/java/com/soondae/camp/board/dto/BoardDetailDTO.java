@@ -1,6 +1,7 @@
 package com.soondae.camp.board.dto;
 
 import com.soondae.camp.file.dto.BoardImageDTO;
+import com.soondae.camp.member.dto.BoardDetailWithMemberDTO;
 import com.soondae.camp.member.dto.UserDTO;
 import com.soondae.camp.reply.dto.ReplyDTO;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class BoardDetailDTO {
 
     private BoardDTO boardDTO;
     private Set<ReplyDTO> replyDTO;
-
+    private BoardDetailWithMemberDTO withMemberDTO;
     private Set<BoardImageDTO> boardImageDTO;
     private long favoriteCount;
 

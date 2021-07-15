@@ -40,7 +40,6 @@ public class Board {
     private boolean bdeleted = false;
 
     @ManyToOne
-    @JoinColumn
     private Member member;
 
     public void changeValue(String bcontent,String bprice,String btitle,String bcategory){

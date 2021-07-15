@@ -27,7 +27,7 @@ public class ReplyRepositoryTests {
 
     @Autowired
     private BoardRepository boardRepository;
-
+    
     @Test
     public void testCreate() {
         IntStream.rangeClosed(1, 5000).forEach(value -> {

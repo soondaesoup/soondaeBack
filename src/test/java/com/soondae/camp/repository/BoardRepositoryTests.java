@@ -51,11 +51,10 @@ public class BoardRepositoryTests {
 
     @Test
     public void testRead(){
-        Optional<Board> result = boardRepository.findById(13L);
+        Optional<Board> result = boardRepository.findById(8L);
         result.ifPresent(board -> {
             log.info(board);
-            log.info(board.getMember().getMnickName());
-            log.info(board.getMember().getMaddress());
+            log.info(board.getMember());
         });
     }
 
@@ -90,7 +89,7 @@ public class BoardRepositoryTests {
     @Test // 검색 + 페이징
     public void testPagingSearch() {
         Pageable pageable = PageRequest.of(0, 10);
-        String keyword = "10";
+        String keyword = "8";
         String type = "t";
         Page<Object[]> result = boardRepository.getSearchList(type, keyword, pageable);
         result.getContent().forEach(objects -> log.info(Arrays.toString(objects)));

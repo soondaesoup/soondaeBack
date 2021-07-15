@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
+@ToString(exclude = "board")
 public class BoardImage {
 
     @Id
@@ -23,7 +23,7 @@ public class BoardImage {
     @Column(nullable = false)
     private String fname;
 
-    @Column(nullable = false)
+    @Column
     @Builder.Default
     private boolean fmain=false;
 
@@ -33,7 +33,7 @@ public class BoardImage {
     @LastModifiedDate
     private LocalDateTime fmodDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
 }

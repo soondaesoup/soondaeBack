@@ -13,6 +13,7 @@ import com.soondae.camp.common.dto.PageMaker;
 import com.soondae.camp.file.dto.BoardImageDTO;
 import com.soondae.camp.file.entity.BoardImage;
 import com.soondae.camp.file.repository.BoardImageRepository;
+import com.soondae.camp.member.dto.BoardDetailWithMemberDTO;
 import com.soondae.camp.member.entity.Member;
 import com.soondae.camp.member.repository.MemberRepository;
 import com.soondae.camp.reply.dto.ReplyDTO;
@@ -61,7 +62,6 @@ public class BoardServiceImpl implements BoardService {
         Pageable pageable = boardListRequestDTO.getPageable();
         Page<Object[]> result = boardRepository.getSearchList(boardListRequestDTO.getType(), boardListRequestDTO.getKeyword(), pageable);
         List<BoardListDTO> boardListDTOS = result.getContent().stream().map(objects -> arrToDTO(objects)).collect(Collectors.toList());
-        log.info("================================================================== result"+boardListDTOS);
         PageMaker pageMaker = new PageMaker(boardListRequestDTO.getPage(), boardListRequestDTO.getSize(), (int) result.getTotalElements());
         return ListResponseDTO.<BoardListDTO>builder()
                 .listRequestDTO(boardListRequestDTO)
@@ -76,12 +76,15 @@ public class BoardServiceImpl implements BoardService {
         Set<Reply> replies = replyRepository.getByBoard((Board) boardWithFavorite[0]);
         Set<BoardImage> images = boardImageRepository.getByBoard((Board) boardWithFavorite[0]);
 
+        log.info("=============================================================================="+images);
 
         BoardDTO boardDTO = entityToDTO((Board) boardWithFavorite[0]);
         Set<ReplyDTO> replyDTOS = replies.stream().map(reply -> ReplyEntityToDTO(reply)).collect(Collectors.toSet());
         Set<BoardImageDTO> boardImageDTOS =  images.stream().map(boardImage -> ImageEntityToDTO(boardImage)).collect(Collectors.toSet());
+        BoardDetailWithMemberDTO withMemberDTO = entityTowithMemberDTO((Member) boardWithFavorite[2]);
 
         BoardDetailDTO boardDetailDTO = BoardDetailDTO.builder()
+                .withMemberDTO(withMemberDTO)
                 .boardDTO(boardDTO)
                 .replyDTO(replyDTOS)
                 .boardImageDTO(boardImageDTOS)

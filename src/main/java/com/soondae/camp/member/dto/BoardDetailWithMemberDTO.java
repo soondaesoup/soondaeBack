@@ -7,7 +7,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserDTO {
+public class BoardDetailWithMemberDTO {
+
     private Long mno;
+    private String maddress;
     private String mnickName;
+    private String memail;
+    private String mphone;
+
 }

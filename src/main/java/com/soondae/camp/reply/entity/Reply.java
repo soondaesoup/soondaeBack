@@ -3,9 +3,12 @@ package com.soondae.camp.reply.entity;
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -23,12 +26,15 @@ public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
+
     @Column(nullable = false)
     private String rtext;
-    @CreatedDate
+
+    @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime rregDate;
-    @LastModifiedDate
+
+    @UpdateTimestamp
     private LocalDateTime rmodDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
