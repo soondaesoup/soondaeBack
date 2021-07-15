@@ -2,6 +2,8 @@ package com.soondae.camp.file.entity;
 
 import com.soondae.camp.board.entity.Board;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -27,10 +29,10 @@ public class BoardImage {
     @Builder.Default
     private boolean fmain=false;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime fregDate;
-    @LastModifiedDate
+    @UpdateTimestamp
     private LocalDateTime fmodDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

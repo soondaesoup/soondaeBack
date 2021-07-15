@@ -1,9 +1,6 @@
 package com.soondae.camp.board.controller;
 
-import com.soondae.camp.board.dto.BoardDTO;
-import com.soondae.camp.board.dto.BoardDetailDTO;
-import com.soondae.camp.board.dto.BoardListDTO;
-import com.soondae.camp.board.dto.BoardListRequestDTO;
+import com.soondae.camp.board.dto.*;
 import com.soondae.camp.board.service.BoardService;
 import com.soondae.camp.common.dto.DetailResponseDTO;
 import com.soondae.camp.common.dto.ListResponseDTO;
@@ -22,8 +19,8 @@ public class BoardController {
 
     // create
     @PostMapping("/register")
-    public ResponseEntity<Long> register(@RequestBody BoardDTO boardDTO) {
-        Long bno = boardService.register(boardDTO);
+    public ResponseEntity<Long> register(@RequestBody BoardInsertDTO boardInsertDTO) {
+        Long bno = boardService.register(boardInsertDTO);
         return ResponseEntity.ok(bno);
     }
 
