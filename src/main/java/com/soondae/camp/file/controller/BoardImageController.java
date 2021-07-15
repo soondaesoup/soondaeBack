@@ -6,9 +6,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -21,20 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@CrossOrigin
+@RestController
+@RequestMapping("/files")
 @Log4j2
 public class BoardImageController {
 
-    @Value("${spring.servlet.multipart.location}")
+    @Value("C:\\ztemp")
     private String path;
+
+    @Value("C:\\tempDB")
+    private String pathDB;
 
     @GetMapping(value = "/check")
     public @ResponseBody String testCheck() {
         return "abc";
     }
-
-
-
 
     @ResponseBody
     @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,6 +68,9 @@ public class BoardImageController {
                     .fname(originalFilename)
                     .build());
         } // end loop
+
+        log.info(result);
         return result;
     }
+
 }
