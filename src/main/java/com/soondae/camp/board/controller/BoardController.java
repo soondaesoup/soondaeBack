@@ -24,6 +24,7 @@ public class BoardController {
     @PostMapping("/register")
     public ResponseEntity<Long> register(@RequestBody BoardDTO boardDTO) {
         Long bno = boardService.register(boardDTO);
+        log.info("이거 안함");
         return ResponseEntity.ok(bno);
     }
 
