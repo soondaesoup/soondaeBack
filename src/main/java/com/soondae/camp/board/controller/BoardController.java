@@ -10,12 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin( origins = {"*"})
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
 @Log4j2
 public class BoardController {
 
     private final BoardService boardService;
+
+    @GetMapping("/test")
+    public ResponseEntity<Long> get() {
+        long bno = 1L;
+        return ResponseEntity.ok(bno);
+    }
 
     // create
     @PostMapping("/register")
@@ -25,6 +32,7 @@ public class BoardController {
     }
 
     // getList
+
     @GetMapping("/list")
     public ResponseEntity<ListResponseDTO> getList(BoardListRequestDTO boardListRequestDTO) {
         return ResponseEntity.ok(boardService.getList(boardListRequestDTO));

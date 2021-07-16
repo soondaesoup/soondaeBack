@@ -2,6 +2,7 @@ package com.soondae.camp.repository;
 
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
+import com.soondae.camp.file.entity.BoardImage;
 import com.soondae.camp.member.entity.Member;
 import com.soondae.camp.reply.repository.ReplyRepository;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +30,7 @@ public class BoardRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 5000).forEach(value -> {
+        IntStream.rangeClosed(1, 101).forEach(value -> {
             long bno = (int) (Math.random()*100) +1;
             Member member = Member.builder()
                     .mno(bno)

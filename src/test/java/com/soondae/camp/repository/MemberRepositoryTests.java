@@ -24,7 +24,7 @@ public class MemberRepositoryTests {
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 5000).forEach(value -> {
+        IntStream.rangeClosed(1, 101).forEach(value -> {
             Member member = Member.builder()
                     .memail("kiteho"+value+"@gmail.com")
                     .mpw(passwordEncoder.encode("1111"))
