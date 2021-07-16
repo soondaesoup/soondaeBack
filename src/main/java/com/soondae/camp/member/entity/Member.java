@@ -1,5 +1,6 @@
 package com.soondae.camp.member.entity;
 
+import com.soondae.camp.board.entity.Board;
 import lombok.*;
 
 import javax.persistence.*;

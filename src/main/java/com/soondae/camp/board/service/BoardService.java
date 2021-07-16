@@ -1,9 +1,6 @@
 package com.soondae.camp.board.service;
 
-import com.soondae.camp.board.dto.BoardDTO;
-import com.soondae.camp.board.dto.BoardDetailDTO;
-import com.soondae.camp.board.dto.BoardListDTO;
-import com.soondae.camp.board.dto.BoardListRequestDTO;
+import com.soondae.camp.board.dto.*;
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.common.dto.DetailResponseDTO;
 import com.soondae.camp.common.dto.ListResponseDTO;
@@ -23,7 +20,7 @@ import java.util.stream.Collectors;
 
 public interface BoardService {
 
-    Long register(BoardDTO boardDTO);
+    Long register(BoardInsertDTO boardInsertDTO);
 
     ListResponseDTO<BoardListDTO> getList(BoardListRequestDTO boardListRequestDTO);
 
@@ -96,25 +93,22 @@ public interface BoardService {
                 .btitle(board.getBtitle())
                 .bcontent(board.getBcontent())
                 .bprice(board.getBprice())
-                .bregDate(board.getBregDate())
-                .bmodDate(board.getBmodDate())
                 .build();
     }
 
-    default Map<String, Object> dtoToEntity(BoardDTO boardDTO) {
+    default Map<String, Object> dtoToEntity(BoardInsertDTO boardInsertDTO) {
         Map<String, Object> entityMap = new HashMap<>();
+        Member member = Member.builder().mno(boardInsertDTO.getMno()).build();
         Board board = Board.builder()
-                .bno(boardDTO.getBno())
-                .bstate(boardDTO.isBstate())
-                .bcategory(boardDTO.getBcategory())
-                .btitle(boardDTO.getBtitle())
-                .bcontent(boardDTO.getBcontent())
-                .bprice(boardDTO.getBprice())
-                .bregDate(boardDTO.getBregDate())
-                .bmodDate(boardDTO.getBmodDate())
+                .member(member)
+                .bstate(boardInsertDTO.isBstate())
+                .bcategory(boardInsertDTO.getBcategory())
+                .btitle(boardInsertDTO.getBtitle())
+                .bcontent(boardInsertDTO.getBcontent())
+                .bprice(boardInsertDTO.getBprice())
                 .build();
         entityMap.put("board", board);
-        List<BoardImageDTO> imageDTOS = boardDTO.getImageDTOS();
+        List<BoardImageDTO> imageDTOS = boardInsertDTO.getImageDTOS();
         if(imageDTOS != null && imageDTOS.size()>0) {
             List<BoardImage> boardImages = imageDTOS.stream().map(boardImageDTO -> {
                 BoardImage boardImage = BoardImage.builder()

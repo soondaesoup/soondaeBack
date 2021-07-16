@@ -2,6 +2,8 @@ package com.soondae.camp.board.entity;
 
 import com.soondae.camp.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -30,10 +32,10 @@ public class Board {
     private String bcontent;
     @Column(nullable = false)
     private String bprice;
-    @CreatedDate
+    @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime bregDate;
-    @LastModifiedDate
+    @UpdateTimestamp
     private LocalDateTime bmodDate;
 
     @Builder.Default

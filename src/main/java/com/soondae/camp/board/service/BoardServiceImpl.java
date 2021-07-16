@@ -1,9 +1,6 @@
 package com.soondae.camp.board.service;
 
-import com.soondae.camp.board.dto.BoardDTO;
-import com.soondae.camp.board.dto.BoardDetailDTO;
-import com.soondae.camp.board.dto.BoardListDTO;
-import com.soondae.camp.board.dto.BoardListRequestDTO;
+import com.soondae.camp.board.dto.*;
 import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
 import com.soondae.camp.board.repository.dynamic.BoardSearchRepo;
@@ -44,8 +41,8 @@ public class BoardServiceImpl implements BoardService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Long register(BoardDTO boardDTO) {
-        Map<String, Object> entityMap = dtoToEntity(boardDTO);
+    public Long register(BoardInsertDTO boardInsertDTO) {
+        Map<String, Object> entityMap = dtoToEntity(boardInsertDTO);
         Board board = (Board) entityMap.get("board");
         List<BoardImage> boardImages = (List<BoardImage>) entityMap.get("boardImages");
         boardRepository.save(board);
