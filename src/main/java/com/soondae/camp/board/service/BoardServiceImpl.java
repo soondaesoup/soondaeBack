@@ -69,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDetailDTO getOne(Long bno) {
         Object[] boardWithFavorite = boardRepository.getOneBoardWithFavorite(bno);
-        Set<Reply> replies = replyRepository.getByBoard((Board) boardWithFavorite[0]);
+        Set<Reply> replies = replyRepository.getByBoardWithMember((Board) boardWithFavorite[0]);
         Set<BoardImage> images = boardImageRepository.getByBoard((Board) boardWithFavorite[0]);
 
         log.info("=============================================================================="+images);

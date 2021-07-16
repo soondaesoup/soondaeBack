@@ -1,6 +1,8 @@
 package com.soondae.camp.file.controller;
 
 import com.soondae.camp.file.dto.BoardImageDTO;
+import com.soondae.camp.file.service.BoardImageService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +24,11 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequestMapping("/files")
+@RequiredArgsConstructor
 @Log4j2
 public class BoardImageController {
+
+    private final BoardImageService boardImageService;
 
     @Value("C:\\ztemp")
     private String path;
@@ -38,39 +43,9 @@ public class BoardImageController {
 
     @ResponseBody
     @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<BoardImageDTO> upload(MultipartFile[] files) {
-
-        List<BoardImageDTO> result = new ArrayList<>();
-
-        for (MultipartFile file:files) {
-            String originalFilename = file.getOriginalFilename();
-            String uuid = UUID.randomUUID().toString();
-
-            File outFile = new File(path, uuid+"_"+originalFilename);
-            File thumbFile = new File(path, "s_"+uuid+"_"+originalFilename);
-
-            try {
-                InputStream fin = file.getInputStream();
-                Files.copy(fin, outFile.toPath());
-
-                BufferedImage originalImage = ImageIO.read(outFile);
-                BufferedImage thumbnail = Thumbnails.of(originalImage)
-                        .size(150, 150)
-                        .asBufferedImage();
-
-                ImageIO.write(thumbnail, "PNG", thumbFile);
-                fin.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            result.add(BoardImageDTO.builder()
-                    .fuuid(uuid)
-                    .fname(originalFilename)
-                    .build());
-        } // end loop
-
-        log.info(result);
-        return result;
+    public List<BoardImageDTO> upload(MultipartFile[] files, Long bno) {
+        log.info("============================="+bno);
+        return boardImageService.imageUpload(files, bno);
     }
 
 }

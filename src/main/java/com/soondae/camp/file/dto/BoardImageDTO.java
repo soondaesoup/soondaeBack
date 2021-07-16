@@ -15,5 +15,7 @@ public class BoardImageDTO {
 
     private String fuuid;
     private String fname;
+    private boolean fmain;
+    private Long bno;
 
 }

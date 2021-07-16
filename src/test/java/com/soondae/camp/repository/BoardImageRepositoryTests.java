@@ -1,37 +1,36 @@
 package com.soondae.camp.repository;
 
 import com.soondae.camp.board.entity.Board;
-import com.soondae.camp.favorite.entity.Favorite;
-import com.soondae.camp.favorite.repository.FavoriteRepository;
-import com.soondae.camp.member.entity.Member;
+import com.soondae.camp.file.entity.BoardImage;
+import com.soondae.camp.file.repository.BoardImageRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
 @Log4j2
-public class FavoriteRepositoryTests {
+public class BoardImageRepositoryTests {
 
     @Autowired
-    private FavoriteRepository favoriteRepository;
+    private BoardImageRepository boardImageRepository;
 
     @Test
     public void testCreate() {
-        IntStream.rangeClosed(1, 500).forEach(value -> {
-            long bno = (int)(Math.random()*101)+1;
+        IntStream.rangeClosed(1,101).forEach(value -> {
+            long bno = (int) (Math.random()*101+1);
             Board board = Board.builder()
                     .bno(bno)
                     .build();
-            Favorite favorite = Favorite.builder()
+            BoardImage boardImage = BoardImage.builder()
+                    .fuuid("9fea1bbb-382a-4177-b483-fd3371cc4e6d_erd"+value)
+                    .fname("미팅"+value)
                     .board(board)
                     .build();
-            favoriteRepository.save(favorite);
+            boardImageRepository.save(boardImage);
         });
     }
-
 
 }

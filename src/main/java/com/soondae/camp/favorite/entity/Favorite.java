@@ -24,7 +24,4 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
-
 }
