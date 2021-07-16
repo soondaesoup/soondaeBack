@@ -80,6 +80,7 @@ public interface BoardService {
         return ReplyDTO.builder()
                 .rno(reply.getRno())
                 .rtext(reply.getRtext())
+                .rwriter(reply.getMember().getMnickName())
                 .rregDate(reply.getRregDate())
                 .rmodDate(reply.getRmodDate())
                 .build();

@@ -72,7 +72,7 @@ public class BoardImageServiceImpl implements BoardImageService {
                     .fname(originalFilename)
                     .bno(bno)
                     .build());
-            
+
 //            log.info("============================= result"+result);
 //
 //            List<BoardImage> imgList = listDTOtoEntity(result);
