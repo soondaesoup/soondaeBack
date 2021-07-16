@@ -1,7 +1,9 @@
 package com.soondae.camp.file.service;
 
+import com.soondae.camp.board.entity.Board;
 import com.soondae.camp.board.repository.BoardRepository;
 import com.soondae.camp.file.dto.BoardImageDTO;
+import com.soondae.camp.file.entity.BoardImage;
 import com.soondae.camp.file.repository.BoardImageRepository;
 import com.soondae.camp.member.repository.MemberRepository;
 import com.soondae.camp.reply.repository.ReplyRepository;
@@ -40,7 +42,7 @@ public class BoardImageServiceImpl implements BoardImageService {
     private String pathDB;
 
     @Override
-    public List<BoardImageDTO> imageUpload(MultipartFile[] files) {
+    public List<BoardImageDTO> imageUpload(MultipartFile[] files, Long bno) {
 
         List<BoardImageDTO> result = new ArrayList<>();
 
@@ -68,13 +70,35 @@ public class BoardImageServiceImpl implements BoardImageService {
             result.add(BoardImageDTO.builder()
                     .fuuid(uuid)
                     .fname(originalFilename)
+                    .bno(bno)
                     .build());
 
-
-
+//            log.info("============================= result"+result);
+//
+//            List<BoardImage> imgList = listDTOtoEntity(result);
+//
+//            log.info("============================= imgList"+imgList);
+//
+//            Board board = Board.builder()
+//                    .bno(bno)
+//                    .build();
+//
+//            log.info("board=============================="+board);
+//
+//            imgList.stream().map(boardImage -> {
+//                BoardImage boardImageEntity = BoardImage.
+//                        builder()
+//                        .fuuid(boardImage.getFuuid())
+//                        .fname(boardImage.getFname())
+//                        .fmain(boardImage.isFmain())
+//                        .board(board)
+//                        .build();
+//                log.info("boardImage.getBoard()================================="+boardImage.getBoard());
+//                boardImageRepository.save(boardImageEntity);
+//                log.info("boardImageEntity==========================="+boardImageEntity);
+//                return boardImageEntity;
+//            });
         } // end loop
-
-        log.info(result);
         return result;
     }
 
