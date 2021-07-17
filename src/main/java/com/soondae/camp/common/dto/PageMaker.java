@@ -21,6 +21,8 @@ public class PageMaker {
     private boolean next;
     // 페이지 번호 리스트
     private List<Integer> pageNumberList;
+
+    private int totalPage;
     
     // 생성자
     public PageMaker(int page, int size, int totalCount) {
@@ -35,7 +37,6 @@ public class PageMaker {
         prev = start > 1;
         next = totalPage > tempEnd;
         pageNumberList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-
     }
 
 
