@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
 @Log4j2
-@CrossOrigin("*")
 public class BoardController {
 
     private final BoardService boardService;

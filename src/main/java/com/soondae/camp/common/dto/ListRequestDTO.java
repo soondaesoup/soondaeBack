@@ -18,7 +18,7 @@ public class ListRequestDTO {
     private int page = 1;
 
     @Builder.Default
-    private int size = 10;
+    private int size = 8;
 
     private String keyword;
 
@@ -27,7 +27,7 @@ public class ListRequestDTO {
     }
 
     public void setSize(int size) {
-        this.size = size < 10 ? 10 : size;
+        this.size = size < 8 ? 8 : size;
     }
 
     @JsonIgnore
