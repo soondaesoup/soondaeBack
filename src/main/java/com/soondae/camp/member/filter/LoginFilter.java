@@ -38,16 +38,21 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         log.info("===got it!===");
         log.info("===attempt Login===");
-        request.setCharacterEncoding("utf-8");
-        String id = request.getParameter("memail");
-        String pw = request.getParameter("mpw");
-//        String jsonStr = request.getReader().readLine(); // 한줄로 써야 하는 이유
-        Map<String, String> inputMap = new HashMap<>();
-        inputMap.put("memail", id);
-        inputMap.put("mpw", pw);
+//        request.setCharacterEncoding("utf-8");
+//        String id = request.getParameter("memail");
+//        String pw = request.getParameter("mpw");
+//
+//        log.info("iddddddddddddddd"+id);
+//        log.info("pwwwwwwwwwwwwwww"+pw);
+        String jsonStr = request.getReader().readLine(); // 한줄로 써야 하는 이유
+//        Map<String, String> inputMap = new HashMap<>();
+//        inputMap.put("memail", id);
+//        inputMap.put("mpw", pw);
         Gson gson = new Gson();
-        String jsonStr = gson.toJson(inputMap);
+//        String jsonStr = gson.toJson(inputMap);
+        log.info("ㅈㅈㅈㅈㅈㅈㅈㅈㅈㅈㅈㅈ"+jsonStr);
         LoginDTO loginDTO = gson.fromJson(jsonStr, LoginDTO.class);
+        log.info("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+loginDTO);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDTO.getMemail(), loginDTO.getMpw());
         Authentication authentication = this.getAuthenticationManager().authenticate(authenticationToken);

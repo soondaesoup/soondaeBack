@@ -60,7 +60,7 @@ public class RefreshFilter extends OncePerRequestFilter {
                     .refreshStr(refreshStr)
                     .expiredDate(expiredDate)
                     .build();
-            memberRefreshTokenRepository.save(refreshToken);
+            memberRefreshTokenRepository.save(memberRefreshToken);
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             Gson gson = new Gson();

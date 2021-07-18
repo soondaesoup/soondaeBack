@@ -37,10 +37,6 @@ public class CheckFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.addHeader("Access-Control-Allow-Headers",
-                "Access-Control-Allow-Origin, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-        if (response.getHeader("Access-Control-Allow-Origin") == null)
-            response.addHeader("Access-Control-Allow-Origin", "*");
         log.info("====Start Check!!====");
         // 어떤 URI???를 검사하는가???
         String requestURI = request.getRequestURI();
@@ -54,10 +50,12 @@ public class CheckFilter extends OncePerRequestFilter {
         // URI가 맞으면??
         String tokenValue = request.getHeader("Authorization");
         String memail = null;
+        String jwtStr = null;
         log.info("====What is tokenValue-->"+tokenValue+"====");
 
-        String jwtStr = tokenValue.substring(7); // Baerer 6글자+스페이스바까지 해서 7글자 잘라내고 뒤에 토큰값
-
+        if (tokenValue != null) {
+            jwtStr = tokenValue.substring(7); // Baerer 6글자+스페이스바까지 해서 7글자 잘라내고 뒤에 토큰값
+        }
         try {
 
         memail = jwtUtil.validateAndExtract(jwtStr); // jwt token값 검사

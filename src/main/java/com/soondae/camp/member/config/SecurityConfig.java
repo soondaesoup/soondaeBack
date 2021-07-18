@@ -25,27 +25,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @Log4j2
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        // - (3)
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable();
         log.info("===Security Config===");
-        http.csrf().disable();
         http.addFilterBefore(checkFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(refreshFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(loginFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -71,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CheckFilter checkFilter() {
-        return new CheckFilter("/api/board/**/*");
+        return new CheckFilter("/api/board/register");
     }
 
     @Bean
