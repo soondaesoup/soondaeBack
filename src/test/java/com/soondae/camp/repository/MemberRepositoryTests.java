@@ -45,8 +45,8 @@ public class MemberRepositoryTests {
 
     @Test
     public void testReadOne() {
-        String email = "kiteho10@gmail.com";
-        Optional<Member> result = memberRepository.findByEmail(email);
+        String memail = "kiteho10@gmail.com";
+        Optional<Member> result = memberRepository.findByEmail(memail);
         result.ifPresent(member -> {
             log.info(member);
         });

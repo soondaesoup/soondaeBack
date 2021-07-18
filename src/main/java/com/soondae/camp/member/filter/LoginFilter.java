@@ -38,8 +38,15 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         log.info("===got it!===");
         log.info("===attempt Login===");
-        String jsonStr = request.getReader().readLine(); // 한줄로 써야 하는 이유
+        request.setCharacterEncoding("utf-8");
+        String id = request.getParameter("memail");
+        String pw = request.getParameter("mpw");
+//        String jsonStr = request.getReader().readLine(); // 한줄로 써야 하는 이유
+        Map<String, String> inputMap = new HashMap<>();
+        inputMap.put("memail", id);
+        inputMap.put("mpw", pw);
         Gson gson = new Gson();
+        String jsonStr = gson.toJson(inputMap);
         LoginDTO loginDTO = gson.fromJson(jsonStr, LoginDTO.class);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDTO.getMemail(), loginDTO.getMpw());
